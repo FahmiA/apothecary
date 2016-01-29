@@ -13,6 +13,8 @@ func _process(delta):
 	
 	if pos.x < target_x:
 		pos.x = target_x
+		get_node("patron/AnimationPlayer").play("idle")
+		get_node("thought_bubble/AnimationPlayer").stop()
 		set_process(false)
 	else:
 		pos.x -= SPEED * delta
@@ -21,4 +23,7 @@ func _process(delta):
 	
 func move_to(x):
 	target_x = x
+	
+	get_node("patron/AnimationPlayer").play("walk_left")
+	get_node("thought_bubble/AnimationPlayer").play("walk")
 	set_process(true)
