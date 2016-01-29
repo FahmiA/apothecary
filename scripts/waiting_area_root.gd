@@ -10,14 +10,43 @@ func _ready():
 func invite_patron():
 	print("Inviting Patron...")
 	
-	var pads = get_tree().get_nodes_in_group("pad")
-	var pad = pads[0]
+	if not has_free_pad():
+		print("\tNo place for a new patron :(")
+		return
 	
-	#var x = get_viewport_rect().size.width
-	var x = pad.get_pos().x
-	var y = 0
+	var pad = get_free_pad()
+	
+	var startX = get_viewport_rect().size.width / 2
+	var startY = 0
+	
+	var targetX = pad.get_pos().x
 	
 	var patronInstance = patronScene.instance()
-	patronInstance.set_pos(Vector2(x, y))
+	patronInstance.set_pos(Vector2(startX, startY))
+	
+	patronInstance.move_to(targetX)
+	pad.set_occupied(true)
 	
 	add_child(patronInstance)
+	
+	print("\tPatron invited :)")
+
+func has_free_pad():
+	var pads = get_tree().get_nodes_in_group("pad")
+	
+	var result = false
+	for pad in pads:
+		result = result or not pad.is_occupied()
+	
+	return result
+	
+func get_free_pad():
+	var pads = get_tree().get_nodes_in_group("pad")
+	
+	var firstFreePad = null
+	for pad in pads:
+		if not pad.is_occupied():
+			firstFreePad = pad
+			break
+	
+	return firstFreePad
