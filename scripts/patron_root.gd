@@ -93,4 +93,6 @@ func _leave():
 	var targetX = get_viewport_rect().size.width + 100;
 	move_to(targetX, true)
 	
+	get_node("patience_timer").stop()
+	
 	get_node("drag_control").queue_free()
