@@ -18,4 +18,4 @@ func set_item(item):
 		get_node("item_sprite").set_texture(null)
 	
 func load_texture(item):
-	get_node("item_sprite").set_texture(load("res://textures/items/%s.tex" % item))
+	get_node("item_sprite").set_texture(load("res://textures/items/%s.tex" % item.to_lower()))
