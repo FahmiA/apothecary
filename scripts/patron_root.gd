@@ -79,6 +79,7 @@ func move_to(x, remove=false):
 	
 func _on_patience_expired():
 	emit_signal("patience_expired", need)
+	get_node("patron/sound").play("boo")
 	_leave()
 
 func _on_impatience_level_1():
@@ -93,7 +94,7 @@ func _on_impatience_level_3():
 func _on_item_recieved(item):
 	if item.get_item() == need:
 		emit_signal("correct_item_recieved", self, item)
-		
+		get_node("patron/sound").play("yay")
 		_leave()
 	else:
 		emit_signal("incorrect_item_recieved", self, item)

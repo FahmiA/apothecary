@@ -20,13 +20,15 @@ func get_drag_data(pos):
 	drag_sprite.set_texture(get_node("item/item_sprite").get_texture())
 	set_drag_preview(drag_control)
 	
+	get_node("item/sound").play("pickup")
+	
 	return get_node("item")
 	
 func _on_item_moved(item):
 	print("_on_item_moved", item, get_node("item"))
 	# this item is moved now, blank it out
 	if item == get_node("item"):
-		print("found me")
+		get_node("item/sound").play("putdown")
 		call_deferred("_clear_item")
 		
 func _clear_item():
