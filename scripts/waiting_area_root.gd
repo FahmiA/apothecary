@@ -30,23 +30,23 @@ func invite_patron():
 	
 	add_child(patron_instance)
 	
-	patron_instance.connect("patience_expired", self, "_on_patron_patience_expired")
+	patron_instance.connect("leave", self, "_on_patron_leave")
 	patron_instance.connect("correct_item_recieved", self, "_on_patron_correct_item_recieved")
 	patron_instance.connect("incorrect_item_recieved", self, "_on_patron_incorrect_item_recieved")
 	
 	print("\tPatron invited :)")
 
-func _on_patron_patience_expired(patron_node):
+func _on_patron_leave(patron_node):
 	var pad = get_occupied_path(patron_node)
 	pad.clear()
 
-func _on_patron_correct_item_recieved(patron_node):
+func _on_patron_correct_item_recieved(patron_node, item):
 	print("Correct item recieved")
-	emit_signal("item_moved")
+	emit_signal("item_moved", item)
 	
-func _on_patron_incorrect_item_recieved(patron_node):
+func _on_patron_incorrect_item_recieved(patron_node, item):
 	print("incorrect item recieved")
-	emit_signal("item_moved")
+	emit_signal("item_moved", item)
 
 func has_free_pad():
 	var pads = get_tree().get_nodes_in_group("pad")

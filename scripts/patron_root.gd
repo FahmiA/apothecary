@@ -13,15 +13,16 @@ func _ready():
 	add_user_signal("patience_expired")
 	add_user_signal("correct_item_recieved")
 	add_user_signal("incorrect_item_recieved")
+	add_user_signal("leave")
 	
 	get_node("patience_timer").connect("timeout", self, "_on_patience_expired")
 	get_node("drag_control").connect("item_recieved", self, "_on_item_recieved")
 	
-	set_need("ABC")
+	set_need("AB")
 	
 func set_need(need):
 	self.need = need
-	get_node("thought_bubble/item").set_item(need)
+	get_node("thought_bubble/scale/item").set_item(need)
 
 func _process(delta):
 		
@@ -57,7 +58,7 @@ func _start_patience_timer():
 	
 	var timerNode = get_node("patience_timer")
 	timerNode.set_wait_time(duration)
-	#timerNode.start()
+	timerNode.start()
 	
 func move_to(x, remove=false):
 	target_x = x
@@ -78,14 +79,18 @@ func _on_patience_expired():
 	
 	_leave()
 	
-func _on_item_recieved(item_code):
-	if item_code == need:
-		emit_signal("correct_item_recieved", self)
+func _on_item_recieved(item):
+	if item.get_item() == need:
+		emit_signal("correct_item_recieved", self, item)
 		
 		_leave()
 	else:
-		emit_signal("incorrect_item_recieved", self)
+		emit_signal("incorrect_item_recieved", self, item)
 	
 func _leave():
+	emit_signal("leave", self)
+	
 	var targetX = get_viewport_rect().size.width + 100;
 	move_to(targetX, true)
+	
+	get_node("drag_control").queue_free()
