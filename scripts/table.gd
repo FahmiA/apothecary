@@ -86,4 +86,5 @@ func mix(stuff):
 		
 	return "X"
 	
-	
+func get_drag_data(pos):
+	return get_node("item").get_item()
