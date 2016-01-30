@@ -76,16 +76,16 @@ func move_to(x, remove=false):
 func _on_patience_expired():
 	emit_signal("patience_expired", self)
 	
-	var targetX = get_viewport_rect().size.width + 100;
-	move_to(targetX, true)
+	_leave()
 	
 func _on_item_recieved(item_code):
 	if item_code == need:
 		emit_signal("correct_item_recieved", self)
 		
-		get_node("patron/AnimationPlayer").play("walk_left")
-		
-		var target_x = -get_global_pos().x;
-		move_to(target_x, true)
+		_leave()
 	else:
 		emit_signal("incorrect_item_recieved", self)
+	
+func _leave():
+	var targetX = get_viewport_rect().size.width + 100;
+	move_to(targetX, true)
