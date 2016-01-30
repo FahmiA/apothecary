@@ -98,6 +98,8 @@ func _on_item_recieved(item):
 		_leave()
 	else:
 		emit_signal("incorrect_item_recieved", self, item)
+		
+		_lose_patience()
 	
 func _leave():
 	emit_signal("leave", self)
@@ -111,3 +113,19 @@ func _leave():
 	get_node("impatience_level_3_timer").stop()
 	
 	get_node("drag_control").queue_free()
+	
+func _lose_patience():
+	# Bring the next active timer forward
+	var timer_nodes = [
+		get_node("impatience_level_1_timer"),
+		get_node("impatience_level_2_timer"),
+		get_node("impatience_level_3_timer"),
+		get_node("patience_timer")
+	]
+
+	for timer_node in timer_nodes:
+		if timer_node.get_time_left() > 0:
+			timer_node.stop()
+			timer_node.set_wait_time(0.5)
+			timer_node.start()
+			break
