@@ -2,28 +2,67 @@
 extends Node2D
 
 const SPEED = 200 # Pixels per second
+const TARGET_DELTA_X = 10
 
 var target_x = 0
+var remove_after_move = false
 
 func _ready():
-	pass
+	add_user_signal("patience_expired")
+	
+	get_node("patience_timer").connect("timeout", self, "_on_patience_expired")
 
 func _process(delta):
 	var pos = get_pos()
 	
-	if pos.x < target_x:
-		pos.x = target_x
-		get_node("patron/AnimationPlayer").play("idle")
-		get_node("thought_bubble/AnimationPlayer").stop()
+	if abs(pos.x - target_x) <= TARGET_DELTA_X:
+		# Destination reached
+		
+		if remove_after_move:
+			self.queue_free()
+		else:
+			pos.x = target_x
+			get_node("patron/AnimationPlayer").play("idle")
+			get_node("thought_bubble/AnimationPlayer").stop()
+			
+			_start_patience_timer()
+		
 		set_process(false)
 	else:
-		pos.x -= SPEED * delta
+		# Keep moving to destination
+		var delta_x = SPEED * delta
 		
+		if target_x < pos.x:
+			pos.x -= delta_x
+		else:
+			pos.x += delta_x
+	
 	set_pos(pos)
+
+func _start_patience_timer():
+	var duration = rand_range(1, 5)
+	print("patience: ", duration)
 	
-func move_to(x):
+	var timerNode = get_node("patience_timer")
+	timerNode.set_wait_time(duration)
+	timerNode.start()
+	
+func move_to(x, remove=false):
 	target_x = x
+	remove_after_move = remove
 	
-	get_node("patron/AnimationPlayer").play("walk_left")
+	# Animate in the correct direction
+	if target_x <= get_pos().x:
+		get_node("patron/AnimationPlayer").play("walk_left")
+	else:
+		get_node("patron/AnimationPlayer").play("walk_right")
+	
 	get_node("thought_bubble/AnimationPlayer").play("walk")
+	
 	set_process(true)
+	
+func _on_patience_expired():
+	emit_signal("patience_expired", self)
+	
+	var targetX = get_viewport_rect().size.width + 100;
+	move_to(targetX, true)

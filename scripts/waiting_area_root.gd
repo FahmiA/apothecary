@@ -1,12 +1,11 @@
 
 extends Node2D
 
-var patronScene = null
+var patron_scene = null
 
 func _ready():
-	patronScene = preload("res://scenes/patron.scn")
-	
-	
+	patron_scene = preload("res://scenes/patron.scn")
+
 func invite_patron():
 	print("Inviting Patron...")
 	
@@ -16,20 +15,26 @@ func invite_patron():
 	
 	var pad = get_free_pad()
 	
-	var startX = get_viewport_rect().size.width / 2
-	var startY = 0
+	var start_x = get_viewport_rect().size.width / 2
+	var start_y = 0
 	
-	var targetX = pad.get_pos().x
+	var target_x = pad.get_pos().x
 	
-	var patronInstance = patronScene.instance()
-	patronInstance.set_pos(Vector2(startX, startY))
+	var patron_instance = patron_scene.instance()
+	patron_instance.set_pos(Vector2(start_x, start_y))
 	
-	patronInstance.move_to(targetX)
-	pad.set_occupied(true)
+	patron_instance.move_to(target_x)
+	pad.set_occupied_node(patron_instance)
 	
-	add_child(patronInstance)
+	add_child(patron_instance)
+	
+	patron_instance.connect("patience_expired", self, "_on_patron_patience_expired")
 	
 	print("\tPatron invited :)")
+
+func _on_patron_patience_expired(patron_node):
+	var pad = get_occupied_path(patron_node)
+	pad.clear()
 
 func has_free_pad():
 	var pads = get_tree().get_nodes_in_group("pad")
@@ -43,10 +48,21 @@ func has_free_pad():
 func get_free_pad():
 	var pads = get_tree().get_nodes_in_group("pad")
 	
-	var firstFreePad = null
+	var first_free_pad = null
 	for pad in pads:
 		if not pad.is_occupied():
-			firstFreePad = pad
+			first_free_pad = pad
 			break
 	
-	return firstFreePad
+	return first_free_pad
+
+func get_occupied_path(node):
+	var pads = get_tree().get_nodes_in_group("pad")
+	
+	var matching_pad = null
+	for pad in pads:
+		if pad.get_occupied_node() == node:
+			matching_pad = pad
+			break
+	
+	return matching_pad
