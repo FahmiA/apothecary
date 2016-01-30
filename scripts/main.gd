@@ -12,5 +12,6 @@ func _ready():
 	get_node("table").connect("on_item_moved", get_node("shelf/item3_control"), "_on_item_moved")
 	get_node("table").connect("on_item_moved", get_node("shelf/item4_control"), "_on_item_moved")
 	 
+	get_node("waiting_area").connect("item_moved", get_node("table"), "_on_item_moved")
 
 

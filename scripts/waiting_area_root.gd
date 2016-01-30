@@ -5,6 +5,8 @@ var patron_scene = null
 
 func _ready():
 	patron_scene = preload("res://scenes/patron.scn")
+	
+	add_user_signal("item_moved")
 
 func invite_patron():
 	print("Inviting Patron...")
@@ -40,9 +42,11 @@ func _on_patron_patience_expired(patron_node):
 
 func _on_patron_correct_item_recieved(patron_node):
 	print("Correct item recieved")
+	emit_signal("item_moved")
 	
 func _on_patron_incorrect_item_recieved(patron_node):
 	print("incorrect item recieved")
+	emit_signal("item_moved")
 
 func has_free_pad():
 	var pads = get_tree().get_nodes_in_group("pad")

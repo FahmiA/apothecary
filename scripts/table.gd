@@ -91,3 +91,13 @@ func mix(stuff):
 	
 func get_drag_data(pos):
 	return get_node("item").get_item()
+	
+func _on_item_moved():
+	print("_on_item_moved", get_node("item"))
+	# this item is moved now, blank it out
+	
+	contents = null
+	call_deferred("_clear_item")
+		
+func _clear_item():
+	get_node("item").set_item(null)
