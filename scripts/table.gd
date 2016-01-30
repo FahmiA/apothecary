@@ -7,10 +7,7 @@ var contents = null
 func _ready():
 	# Initialization here
 	add_user_signal("on_item_moved")
-
-func _draw():
-	var r = Rect2(Vector2(),get_size())
-	draw_rect(r, Color(1,0,0,0.5) )
+	add_user_signal("items_mixed")
 
 func can_drop_data(pos, data):
 	print("can_drop_data in table")
@@ -27,8 +24,9 @@ func drop_data(pos, data):
 		# something already there, mix it
 		contents = mix([data.get_item(), contents])
 		emit_signal("items_mixed", data)
+		
+		get_node("item/magic/AnimationPlayer").play("poof")
 
-	print(contents)
 	var tex = load("res://textures/items/%s.tex" % contents.to_lower())
 	get_node("item").set_item(contents)
 

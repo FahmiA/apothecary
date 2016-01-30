@@ -14,6 +14,7 @@ func _ready():
 	get_node("table").connect("on_item_moved", get_node("shelf/item2_control"), "_on_item_moved")
 	get_node("table").connect("on_item_moved", get_node("shelf/item3_control"), "_on_item_moved")
 	get_node("table").connect("on_item_moved", get_node("shelf/item4_control"), "_on_item_moved")
+	get_node("table").connect("items_mixed", self, "_on_items_mixed")
 	
 	# Bind drag events from waiting area
 	get_node("waiting_area").connect("item_moved", get_node("table"), "_on_item_moved")
@@ -30,6 +31,9 @@ func _ready():
 	
 	# Bind timer patron spawn events
 	get_node("patron_timer").connect("timeout", self, "_on_new_patron")
+	
+func _on_items_mixed(item):
+	get_node("background/arms/AnimationPlayer").play("mix")
 	
 func _on_new_patron():
 	if not item_choices.empty():
