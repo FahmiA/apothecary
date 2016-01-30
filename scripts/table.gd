@@ -86,7 +86,16 @@ func mix(stuff):
 		return "ABCD"
 	if(stuff == ["A","BCD"]):
 		return "ABCD"
-		
+
+	if(stuff == ["A","X"]):
+		return "A"
+	if(stuff == ["B","X"]):
+		return "B"
+	if(stuff == ["C","X"]):
+		return "C"
+	if(stuff == ["D","X"]):
+		return "D"
+
 	return "X"
 	
 func get_drag_data(pos):

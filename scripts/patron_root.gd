@@ -3,6 +3,7 @@ extends Node2D
 
 const SPEED = 200 # Pixels per second
 const TARGET_DELTA_X = 10
+const ITEM_CHOICES = ["A", "B", "C", "D", "AB", "CD", "ABC", "ABCD"]
 
 var target_x = 0
 var remove_after_move = false
@@ -18,7 +19,10 @@ func _ready():
 	get_node("patience_timer").connect("timeout", self, "_on_patience_expired")
 	get_node("drag_control").connect("item_recieved", self, "_on_item_recieved")
 	
-	set_need("AB")
+	var random_index = rand_range(0, ITEM_CHOICES.size())
+	var item_choice = ITEM_CHOICES[random_index]
+	
+	set_need(item_choice)
 	
 func set_need(need):
 	self.need = need
@@ -53,7 +57,7 @@ func _process(delta):
 	set_pos(pos)
 
 func _start_patience_timer():
-	var duration = rand_range(1, 5)
+	var duration = rand_range(10, 30)
 	print("patience: ", duration)
 	
 	var timerNode = get_node("patience_timer")

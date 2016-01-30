@@ -4,6 +4,8 @@ extends Control
 var drag_sprite
 var drag_control
 
+const ITEM_CHOICES = ["A", "B", "C", "D", "AB", "CD"]
+
 func _ready():
 	pass
 
@@ -28,4 +30,7 @@ func _on_item_moved(item):
 		call_deferred("_clear_item")
 		
 func _clear_item():
-	get_node("item").set_item(null)
+	var random_index = rand_range(0, ITEM_CHOICES.size())
+	var item_choice = ITEM_CHOICES[random_index]
+	
+	get_node("item").set_item(item_choice)
