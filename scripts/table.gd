@@ -6,7 +6,7 @@ var contents = null
 
 func _ready():
 	# Initialization here
-	pass
+	add_user_signal("on_item_moved")
 
 func _draw():
 	var r = Rect2(Vector2(),get_size())
@@ -17,15 +17,18 @@ func can_drop_data(pos, data):
 	return true
 
 func drop_data(pos, data):
-	print("drop_data in table", data)
-	#data == "A", "B", "C" etc.
-	
+	print("drop_data in table", data, data.get_item())
+
+	emit_signal("on_item_moved", data)
+
 	if not contents:
-		contents = data
+		contents = data.get_item()
 	else:
 		# something already there, mix it
-		contents = mix([data, contents])
-		
+		contents = mix([data.get_item(), contents])
+		emit_signal("items_mixed", data)
+
+	print(contents)
 	var tex = load("res://textures/items/%s.tex" % contents.to_lower())
 	get_node("item").set_item(contents)
 

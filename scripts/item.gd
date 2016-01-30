@@ -6,6 +6,10 @@ var _item
 func _ready():
 	# Initialization here
 	set_item(null)
+	
+	
+#	set_process ( true )
+
 
 func get_item():
 	return _item
