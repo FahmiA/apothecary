@@ -16,6 +16,10 @@ func _ready():
 	add_user_signal("leave")
 	
 	get_node("patience_timer").connect("timeout", self, "_on_patience_expired")
+	get_node("impatience_level_1_timer").connect("timeout", self, "_on_impatience_level_1")
+	get_node("impatience_level_2_timer").connect("timeout", self, "_on_impatience_level_2")
+	get_node("impatience_level_3_timer").connect("timeout", self, "_on_impatience_level_3")
+	
 	get_node("drag_control").connect("item_recieved", self, "_on_item_recieved")
 	
 func set_need(item_code):
@@ -50,12 +54,16 @@ func _process(delta):
 	set_pos(pos)
 
 func _start_patience_timer():
-	var duration = rand_range(10, 30)
-	print("patience: ", duration)
+	var duration = rand_range(20, 30)
 	
-	var timerNode = get_node("patience_timer")
-	timerNode.set_wait_time(duration)
-	timerNode.start()
+	_start_timer(get_node("patience_timer"), duration)
+	_start_timer(get_node("impatience_level_1_timer"), duration * 0.4)
+	_start_timer(get_node("impatience_level_2_timer"), duration * 0.6)
+	_start_timer(get_node("impatience_level_3_timer"), duration * 0.8)
+	
+func _start_timer(timer_node, duration):
+	timer_node.set_wait_time(duration)
+	timer_node.start()
 	
 func move_to(x, remove=false):
 	target_x = x
@@ -71,8 +79,16 @@ func move_to(x, remove=false):
 	
 func _on_patience_expired():
 	emit_signal("patience_expired", self)
-	
 	_leave()
+
+func _on_impatience_level_1():
+	get_node("patron/AnimationPlayer").play("impatient_level_1")
+	
+func _on_impatience_level_2():
+	get_node("patron/AnimationPlayer").play("impatient_level_2")
+	
+func _on_impatience_level_3():
+	get_node("patron/AnimationPlayer").play("impatient_level_3")
 	
 func _on_item_recieved(item):
 	if item.get_item() == need:
