@@ -54,7 +54,7 @@ func _process(delta):
 	set_pos(pos)
 
 func _start_patience_timer():
-	var duration = rand_range(2, 3)
+	var duration = rand_range(20, 30)
 	
 	_start_timer(get_node("patience_timer"), duration)
 	_start_timer(get_node("impatience_level_1_timer"), duration * 0.4)
@@ -105,5 +105,8 @@ func _leave():
 	move_to(targetX, true)
 	
 	get_node("patience_timer").stop()
+	get_node("impatience_level_1_timer").stop()
+	get_node("impatience_level_2_timer").stop()
+	get_node("impatience_level_3_timer").stop()
 	
 	get_node("drag_control").queue_free()
