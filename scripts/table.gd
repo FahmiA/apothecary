@@ -38,7 +38,7 @@ func mix(stuff):
 		return "X"
 		
 	if(stuff == ["A","B"]):
-		return "C"
+		return "AB"
 	if(stuff == ["A","C"]):
 		return "AC"
 	if(stuff == ["A","D"]):
@@ -49,7 +49,41 @@ func mix(stuff):
 		return "BD"
 	if(stuff == ["C","D"]):
 		return "CD"
+
+	if(stuff == ["AB","BC"]):
+		return "ABC"
+	if(stuff == ["AB","AC"]):
+		return "ABC"
+	if(stuff == ["AC","BC"]):
+		return "ABC"
+	if(stuff == ["AB","AD"]):
+		return "ABD"
+	if(stuff == ["AB","BD"]):
+		return "ABD"
+	if(stuff == ["AD","BD"]):
+		return "ABD"
+	if(stuff == ["AC","AD"]):
+		return "ACD"
+	if(stuff == ["AD","CD"]):
+		return "ACD"
+	if(stuff == ["AC","CD"]):
+		return "ACD"
+	if(stuff == ["BC","BD"]):
+		return "BCD"
+	if(stuff == ["BC","CD"]):
+		return "BCD"
+	if(stuff == ["BD","CD"]):
+		return "BCD"
+
+	if(stuff == ["ABC","D"]):
+		return "ABCD"
+	if(stuff == ["ABD","C"]):
+		return "ABCD"
+	if(stuff == ["ACD","B"]):
+		return "ABCD"
+	if(stuff == ["A","BCD"]):
+		return "ABCD"
 		
-	return "X"		
+	return "X"
 	
 	
