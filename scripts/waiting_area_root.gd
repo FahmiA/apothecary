@@ -8,7 +8,7 @@ func _ready():
 	
 	add_user_signal("item_moved")
 
-func invite_patron():
+func invite_patron(item_code):
 	print("Inviting Patron...")
 	
 	if not has_free_pad():
@@ -23,6 +23,8 @@ func invite_patron():
 	var target_x = pad.get_pos().x
 	
 	var patron_instance = patron_scene.instance()
+	patron_instance.set_need(item_code)
+	
 	patron_instance.set_pos(Vector2(start_x, start_y))
 	
 	patron_instance.move_to(target_x)
