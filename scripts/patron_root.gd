@@ -34,7 +34,6 @@ func _process(delta):
 		else:
 			pos.x = target_x
 			get_node("patron/AnimationPlayer").play("idle")
-			get_node("thought_bubble/AnimationPlayer").stop()
 			
 			_start_patience_timer()
 		
@@ -67,8 +66,6 @@ func move_to(x, remove=false):
 		get_node("patron/AnimationPlayer").play("walk_left")
 	else:
 		get_node("patron/AnimationPlayer").play("walk_right")
-	
-	get_node("thought_bubble/AnimationPlayer").play("walk")
 	
 	set_process(true)
 	

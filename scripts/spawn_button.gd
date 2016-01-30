@@ -6,4 +6,5 @@ func _ready():
 
 func _on_button_pressed():
 	var waitingAreaScene = get_node("/root/Control/waiting_area")
-	waitingAreaScene.invite_patron()
+	var item_code = "A"
+	waitingAreaScene.invite_patron(item_code)
