@@ -23,14 +23,14 @@ func invite_patron(item_code):
 	var target_x = pad.get_pos().x
 	
 	var patron_instance = patron_scene.instance()
-	patron_instance.set_need(item_code)
-	
 	patron_instance.set_pos(Vector2(start_x, start_y))
 	
 	patron_instance.move_to(target_x)
 	pad.set_occupied_node(patron_instance)
 	
 	add_child(patron_instance)
+	
+	patron_instance.set_need(item_code)
 	
 	patron_instance.connect("leave", self, "_on_patron_leave")
 	patron_instance.connect("correct_item_recieved", self, "_on_patron_correct_item_recieved")
