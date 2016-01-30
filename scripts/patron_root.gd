@@ -7,12 +7,24 @@ const TARGET_DELTA_X = 10
 var target_x = 0
 var remove_after_move = false
 
+var need = null
+
 func _ready():
 	add_user_signal("patience_expired")
+	add_user_signal("correct_item_recieved")
+	add_user_signal("incorrect_item_recieved")
 	
 	get_node("patience_timer").connect("timeout", self, "_on_patience_expired")
+	get_node("drag_control").connect("item_recieved", self, "_on_item_recieved")
+	
+	set_need("ABC")
+	
+func set_need(need):
+	self.need = need
+	get_node("thought_bubble/item").set_item(need)
 
 func _process(delta):
+		
 	var pos = get_pos()
 	
 	if abs(pos.x - target_x) <= TARGET_DELTA_X:
@@ -45,7 +57,7 @@ func _start_patience_timer():
 	
 	var timerNode = get_node("patience_timer")
 	timerNode.set_wait_time(duration)
-	timerNode.start()
+	#timerNode.start()
 	
 func move_to(x, remove=false):
 	target_x = x
@@ -66,3 +78,14 @@ func _on_patience_expired():
 	
 	var targetX = get_viewport_rect().size.width + 100;
 	move_to(targetX, true)
+	
+func _on_item_recieved(item_code):
+	if item_code == need:
+		emit_signal("correct_item_recieved", self)
+		
+		get_node("patron/AnimationPlayer").play("walk_left")
+		
+		var target_x = -get_global_pos().x;
+		move_to(target_x, true)
+	else:
+		emit_signal("incorrect_item_recieved", self)
