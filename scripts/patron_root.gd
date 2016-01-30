@@ -54,7 +54,7 @@ func _process(delta):
 	set_pos(pos)
 
 func _start_patience_timer():
-	var duration = rand_range(20, 30)
+	var duration = rand_range(2, 3)
 	
 	_start_timer(get_node("patience_timer"), duration)
 	_start_timer(get_node("impatience_level_1_timer"), duration * 0.4)
@@ -78,7 +78,7 @@ func move_to(x, remove=false):
 	set_process(true)
 	
 func _on_patience_expired():
-	emit_signal("patience_expired", self)
+	emit_signal("patience_expired", need)
 	_leave()
 
 func _on_impatience_level_1():

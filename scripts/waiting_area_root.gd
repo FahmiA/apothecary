@@ -7,6 +7,9 @@ func _ready():
 	patron_scene = preload("res://scenes/patron.scn")
 	
 	add_user_signal("item_moved")
+	add_user_signal("patron_patience_expired")
+	add_user_signal("correct_item_recieved")
+	add_user_signal("incorrect_item_recieved")
 
 func invite_patron(item_code):
 	print("Inviting Patron...")
@@ -33,6 +36,7 @@ func invite_patron(item_code):
 	patron_instance.set_need(item_code)
 	
 	patron_instance.connect("leave", self, "_on_patron_leave")
+	patron_instance.connect("patience_expired", self, "_on_patience_expired")
 	patron_instance.connect("correct_item_recieved", self, "_on_patron_correct_item_recieved")
 	patron_instance.connect("incorrect_item_recieved", self, "_on_patron_incorrect_item_recieved")
 	
@@ -41,14 +45,19 @@ func invite_patron(item_code):
 func _on_patron_leave(patron_node):
 	var pad = get_occupied_path(patron_node)
 	pad.clear()
+	
+func _on_patience_expired(item_code):
+	emit_signal("patron_patience_expired", item_code)
 
 func _on_patron_correct_item_recieved(patron_node, item):
 	print("Correct item recieved")
 	emit_signal("item_moved", item)
+	emit_signal("correct_item_recieved", item)
 	
 func _on_patron_incorrect_item_recieved(patron_node, item):
 	print("incorrect item recieved")
 	emit_signal("item_moved", item)
+	emit_signal("incorrect_item_recieved", item)
 
 func has_free_pad():
 	var pads = get_tree().get_nodes_in_group("pad")

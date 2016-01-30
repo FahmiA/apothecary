@@ -22,6 +22,9 @@ func _ready():
 	get_node("waiting_area").connect("item_moved", get_node("shelf/item2_control"), "_on_item_moved")
 	get_node("waiting_area").connect("item_moved", get_node("shelf/item3_control"), "_on_item_moved")
 	get_node("waiting_area").connect("item_moved", get_node("shelf/item4_control"), "_on_item_moved")
+	
+	get_node("waiting_area").connect("correct_item_recieved", get_node("jar_shelf"), "_on_correct_item_recieved")
+	get_node("waiting_area").connect("patron_patience_expired", get_node("jar_shelf"), "_on_patron_patience_expired")
 
 	# Bind timer difficulty events
 	get_node("timer_easy").connect("timeout", self, "_on_timer_easy")
