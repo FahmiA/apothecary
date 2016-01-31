@@ -54,7 +54,7 @@ func _process(delta):
 	set_pos(pos)
 
 func _start_patience_timer():
-	var duration = rand_range(2, 3)
+	var duration = rand_range(20, 30)
 	
 	_start_timer(get_node("patience_timer"), duration)
 	_start_timer(get_node("impatience_level_1_timer"), duration * 0.4)
@@ -106,6 +106,8 @@ func _leave():
 	
 	var targetX = get_viewport_rect().size.width + 100;
 	move_to(targetX, true)
+	
+	get_node("thought_bubble").hide()
 	
 	get_node("patience_timer").stop()
 	get_node("impatience_level_1_timer").stop()
