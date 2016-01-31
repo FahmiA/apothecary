@@ -4,7 +4,7 @@ extends Control
 var drag_sprite
 var drag_control
 
-const ITEM_CHOICES = ["A", "B", "C", "D", "AB", "CD"]
+const ITEM_CHOICES = ["A", "B", "C", "D"]
 
 func _ready():
 	pass
