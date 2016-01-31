@@ -45,6 +45,7 @@ Download appropriate binary provided for your system and run.
 - GIMP
 - Reason 8
 - Aseprite
+- Paganini font by Dieter Steffmann
 
 ## Credits
 
