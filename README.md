@@ -46,6 +46,7 @@ Download appropriate binary provided for your system and run.
 - Reason 8
 - Aseprite
 - Paganini font by Dieter Steffmann
+- Bfxr
 
 ## Credits
 
