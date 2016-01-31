@@ -2,8 +2,8 @@
 extends Control
 
 const ITEM_CHOICES_EASY =	["A", "B", "C", "D"]
-const ITEM_CHOICES_MEDIUM =	["AB", "CD"]
-const ITEM_CHOICES_HARD =	["ABC"]
+const ITEM_CHOICES_MEDIUM =	["AB", "AC", "AD", "BC", "BD", "CD"]
+const ITEM_CHOICES_HARD =	["ABC", "ACD", "ABD", "BCD"]
 const ITEM_CHOICES_EXTREME =["ABCD"]
 
 var item_choices = []

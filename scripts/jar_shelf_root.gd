@@ -1,7 +1,7 @@
 
 extends Node2D
 
-const CORRECT_ITEM_BONUS = 2
+const CORRECT_ITEM_BONUS = 1
 const INCORRECT_ITEM_PENALTY = 1
 
 const ITEM_DIFFICULTY_MULTIPLIER = 1.5
@@ -38,6 +38,7 @@ func _on_patron_patience_expired(item_code):
 func _check_end_game():
 	var fixed_jars = _get_fixed_jars()
 	
+	print('fixed_jars: ', fixed_jars)
 	if fixed_jars.empty():
 		emit_signal("all_jars_broken")
 	

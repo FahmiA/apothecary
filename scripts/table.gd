@@ -32,12 +32,11 @@ func drop_data(pos, data):
 
 
 func mix(stuff):
-	print("mix", stuff)
 	stuff.sort()
-	print("mix", stuff)
+	
 	if(stuff[0] == stuff[1]):
-		return "X"
-		
+		return stuff[0]
+	
 	if(stuff == ["A","B"]):
 		return "AB"
 	if(stuff == ["A","C"]):
@@ -51,6 +50,32 @@ func mix(stuff):
 	if(stuff == ["C","D"]):
 		return "CD"
 
+	if(stuff == ["A","BC"]):
+		return "ABC"
+	if(stuff == ["A","BD"]):
+		return "ABD"
+	if(stuff == ["A","CD"]):
+		return "ACD"
+	if(stuff == ["AC","B"]):
+		return "ABC"
+	if(stuff == ["AD","B"]):
+		return "ABD"
+	if(stuff == ["B","CD"]):
+		return "BCD"
+	if(stuff == ["AB","C"]):
+		return "ABC"
+	if(stuff == ["AD","C"]):
+		return "ACD"
+	if(stuff == ["BD","C"]):
+		return "BCD"
+	if(stuff == ["AB","D"]):
+		return "ABD"
+	if(stuff == ["AC","D"]):
+		return "ACD"
+	if(stuff == ["BC","D"]):
+		return "BCD"
+	
+			
 	if(stuff == ["AB","BC"]):
 		return "ABC"
 	if(stuff == ["AB","AC"]):

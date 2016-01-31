@@ -1,12 +1,9 @@
 
 extends Control
 
-# member variables here, example:
-# var a=2
-# var b="textvar"
-
 func _ready():
-	# Initialization here
-	pass
+	set_process_input(true)
 
-
+func _input_event(ev):
+	if Input.is_action_pressed("mouse_click") or Input.is_action_pressed("ui_accept"):
+		get_tree().change_scene("res://scenes/main.scn")
