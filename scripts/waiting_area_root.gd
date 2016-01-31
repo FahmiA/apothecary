@@ -20,7 +20,7 @@ func invite_patron(item_code):
 	
 	var pad = get_free_pad()
 	
-	var start_x = get_viewport_rect().size.width / 2
+	var start_x = get_viewport_rect().size.width + 100
 	var start_y = 0
 	
 	var target_x = pad.get_pos().x
