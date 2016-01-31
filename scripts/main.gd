@@ -23,6 +23,9 @@ func _ready():
 	get_node("waiting_area").connect("item_moved", get_node("shelf/item3_control"), "_on_item_moved")
 	get_node("waiting_area").connect("item_moved", get_node("shelf/item4_control"), "_on_item_moved")
 	
+	# Bind event from jar shelf
+	get_node("jar_shelf").connect("all_jars_broken", self, "_on_game_end")
+	
 	get_node("waiting_area").connect("correct_item_recieved", get_node("jar_shelf"), "_on_correct_item_recieved")
 	get_node("waiting_area").connect("patron_patience_expired", get_node("jar_shelf"), "_on_patron_patience_expired")
 
@@ -63,3 +66,6 @@ func _on_timer_extreme():
 func _append_choices(new_item_choices):
 	for choice in new_item_choices:
 		item_choices.append(choice)
+
+func _on_game_end():
+	get_tree().change_scene("res://scenes/title.scn")

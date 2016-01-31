@@ -33,6 +33,14 @@ func _on_patron_patience_expired(item_code):
 		
 		jar.break_jar(delay)
 		
+	_check_end_game()
+
+func _check_end_game():
+	var fixed_jars = _get_fixed_jars()
+	
+	if fixed_jars.empty():
+		emit_signal("all_jars_broken")
+	
 func get_jar_bonus(penalty, item_code):
 	return floor(penalty * ITEM_DIFFICULTY_MULTIPLIER * item_code.length())
 
