@@ -7,6 +7,7 @@ const ITEM_CHOICES_HARD =	["ABC"]
 const ITEM_CHOICES_EXTREME =["ABCD"]
 
 var item_choices = []
+var game_ended = false
 
 func _ready():
 	# Bind drag events from table
@@ -68,4 +69,10 @@ func _append_choices(new_item_choices):
 		item_choices.append(choice)
 
 func _on_game_end():
+	if not game_ended:
+		game_ended = true
+		get_node("AnimationPlayer").play("fade_out")
+		get_node("AnimationPlayer").connect("finished", self, "_on_fade_out")
+
+func _on_fade_out():
 	get_tree().change_scene("res://scenes/title.scn")
