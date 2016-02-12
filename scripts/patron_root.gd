@@ -104,7 +104,7 @@ func _on_item_recieved(item):
 func _leave():
 	emit_signal("leave", self)
 	
-	var targetX = get_viewport_rect().size.width + 100;
+	var targetX = get_viewport_rect().size.width;
 	move_to(targetX, true)
 	
 	get_node("thought_bubble").hide()
