@@ -22,8 +22,9 @@ func drop_data(pos, data):
 		contents = data.get_item()
 	else:
 		# something already there, mix it
+		var old_contents = contents;
 		contents = mix([data.get_item(), contents])
-		emit_signal("items_mixed", data)
+		emit_signal("items_mixed", old_contents, data.get_item(), contents)
 		
 		get_node("item/magic/AnimationPlayer").play("poof")
 

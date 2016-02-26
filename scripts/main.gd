@@ -39,8 +39,9 @@ func _ready():
 	# Bind timer patron spawn events
 	get_node("patron_timer").connect("timeout", self, "_on_new_patron")
 	
-func _on_items_mixed(item):
+func _on_items_mixed(item_1, item_2, item_result):
 	get_node("background/arms/AnimationPlayer").play("mix")
+	get_node("mix_memory").add_memory(item_1, item_2, item_result)
 	
 func _on_new_patron():
 	if not item_choices.empty():
